@@ -16,7 +16,17 @@ logger = logging.getLogger("elastic-groove")
 
 app = FastAPI(title="Elastic Groove API", version="3.0.0")
 
-ALLOWED_ORIGINS = os.environ.get("ALLOWED_ORIGINS", "*").split(",")
+_origins = os.environ.get("ALLOWED_ORIGINS", "*").split(",")
+ALLOWED_ORIGINS = []
+for o in _origins:
+    o = o.strip()
+    ALLOWED_ORIGINS.append(o)
+    if o.startswith("https://www."):
+        ALLOWED_ORIGINS.append(o.replace("https://www.", "https://"))
+    elif o.startswith("https://") and "//www." not in o and o != "*":
+        ALLOWED_ORIGINS.append(o.replace("https://", "https://www."))
+if "*" in ALLOWED_ORIGINS:
+    ALLOWED_ORIGINS = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
