@@ -18,6 +18,8 @@ GM_DRUM_MAP = {
     3: 46,  # HH Open → Open Hi-Hat
     4: 39,  # Clap → Hand Clap
     5: 56,  # Perc → Cowbell
+    6: 37,  # Rimshot → Side Stick
+    7: 49,  # Crash → Crash Cymbal 1
 }
 
 

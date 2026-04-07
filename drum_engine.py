@@ -62,7 +62,25 @@ def synth_perc(sr: int = SR) -> np.ndarray:
     return np.sin(phase) * np.exp(-t * 40) * 0.5
 
 
-SYNTHS = [synth_kick, synth_snare, synth_hihat_closed, synth_hihat_open, synth_clap, synth_perc]
+def synth_rimshot(sr: int = SR) -> np.ndarray:
+    length = int(sr * 0.06)
+    t = np.linspace(0, 0.06, length, endpoint=False)
+    freq = 800 * np.exp(-t * 40) + 400
+    phase = np.cumsum(2 * np.pi * freq / sr)
+    osc = np.sin(phase) * 0.7
+    env = np.exp(-t * 60)
+    return osc * env * 0.7
+
+
+def synth_crash(sr: int = SR) -> np.ndarray:
+    length = int(sr * 0.8)
+    t = np.linspace(0, 0.8, length, endpoint=False)
+    noise = np.random.randn(length) * 0.35
+    env = np.exp(-t * 4)
+    return noise * env * 0.5
+
+
+SYNTHS = [synth_kick, synth_snare, synth_hihat_closed, synth_hihat_open, synth_clap, synth_perc, synth_rimshot, synth_crash]
 
 
 def render_drums(
