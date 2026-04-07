@@ -95,15 +95,15 @@ def render_midi(
 
             # ── Bass (Track 1, Channel 0) ──
             if bass:
-                _add_melodic_notes(midi, 1, 0, bass, step_idx, beat_time, step_duration, loop_idx, swing, global_step)
+                _add_melodic_notes(midi, 1, 0, bass, step_idx, beat_time, step_duration, loop_idx, swing, global_step, is_fill)
 
             # ── Synth 1 (Track 2, Channel 1) ──
             if synth:
-                _add_melodic_notes(midi, 2, 1, synth, step_idx, beat_time, step_duration, loop_idx, swing, global_step)
+                _add_melodic_notes(midi, 2, 1, synth, step_idx, beat_time, step_duration, loop_idx, swing, global_step, is_fill)
 
             # ── Synth 2 (Track 3, Channel 2) ──
             if synth2:
-                _add_melodic_notes(midi, 3, 2, synth2, step_idx, beat_time, step_duration, loop_idx, swing, global_step)
+                _add_melodic_notes(midi, 3, 2, synth2, step_idx, beat_time, step_duration, loop_idx, swing, global_step, is_fill)
 
     output = tempfile.NamedTemporaryFile(delete=False, suffix=".mid")
     output_path = output.name
@@ -126,6 +126,7 @@ def _add_melodic_notes(
     loop_idx: int,
     global_swing: float = 0,
     global_step: int = 0,
+    is_fill: bool = False,
 ):
     """Add melodic notes (with chord expansion and per-track swing) to MIDI."""
     steps = get(track, "steps", [])
