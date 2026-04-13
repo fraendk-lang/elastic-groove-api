@@ -16,6 +16,10 @@ logger = logging.getLogger("elastic-groove")
 
 app = FastAPI(title="Elastic Groove API", version="3.0.0")
 
+@app.get("/health")
+def health():
+    return {"status": "ok", "service": "elastic-groove"}
+
 _origins = os.environ.get("ALLOWED_ORIGINS", "*").split(",")
 ALLOWED_ORIGINS = []
 for o in _origins:
